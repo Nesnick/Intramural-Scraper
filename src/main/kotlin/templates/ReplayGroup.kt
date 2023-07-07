@@ -1,7 +1,6 @@
 package templates
 
-import Players
-import Teams
+
 import com.google.gson.annotations.SerializedName
 
 data class ReplayGroup(

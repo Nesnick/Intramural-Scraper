@@ -5,6 +5,7 @@ import com.github.kittinunf.fuel.gson.responseObject
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import templates.Root
+import java.io.File
 import java.io.FileInputStream
 import java.nio.file.Paths
 import java.util.Properties
@@ -53,14 +54,24 @@ fun main(args : Array<String>) {
         val typeToken = object : TypeToken<Root>(){}.type
         println(response.body().asString(response.headers[Headers.CONTENT_TYPE].lastOrNull()))
         val req = Gson().fromJson<Root>(response.body().asString(response.headers[Headers.CONTENT_TYPE].lastOrNull()), typeToken)
-        println(req)
+
     }
     getGroupIdReturn.join()
 
+
     //upload a replay
+    val file = FileDataPart(File("C:\\Users\\Spencer\\Documents\\git\\Intramural-Scraper\\replay.replay"), name = "file")
+
+    val uploadReplay = Fuel.upload("https://ballchasing.com/api/v2/upload", method = Method.POST).add(file)
+        .response{ request, response, result ->
+            println(request)
+            println(response)
+        }
+    uploadReplay.join()
 
 
 }
+
 
 
 fun pingBallchasing() : Boolean {

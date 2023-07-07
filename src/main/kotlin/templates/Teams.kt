@@ -1,6 +1,5 @@
 package templates
 
-import Players
 import com.google.gson.annotations.SerializedName
 
 data class Teams (
