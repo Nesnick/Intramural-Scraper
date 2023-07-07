@@ -1,6 +1,10 @@
-import com.github.kittinunf.fuel.core.FuelManager
-import com.github.kittinunf.fuel.core.isSuccessful
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.core.*
 import com.github.kittinunf.fuel.httpGet
+import com.github.kittinunf.fuel.gson.responseObject
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import templates.Root
 import java.io.FileInputStream
 import java.nio.file.Paths
 import java.util.Properties
@@ -34,15 +38,26 @@ fun main(args : Array<String>) {
         return
 
     //create a group
-    val groupJson = """
+    val createGroupJson = """
         {
         "name": "Test",
         "player_identification": "by-id",
         "team_identification": "by-distinct-players"
         }
     """.trimIndent()
-    //val (request, response, result) = "https://ballchasing.com/api/groups".httpPost().body(groupJson).response();
-    //print(response)
+    val createGroupReturn = Fuel.post( "https://ballchasing.com/api/groups").body(createGroupJson).response()
+
+    //get a group id by name
+
+    val getGroupIdReturn = Fuel.get("https://ballchasing.com/api/groups").header(mapOf("name" to "Test")).response{ request, response, result ->
+        val typeToken = object : TypeToken<Root>(){}.type
+        println(response.body().asString(response.headers[Headers.CONTENT_TYPE].lastOrNull()))
+        val req = Gson().fromJson<Root>(response.body().asString(response.headers[Headers.CONTENT_TYPE].lastOrNull()), typeToken)
+        println(req)
+    }
+    getGroupIdReturn.join()
+
+    //upload a replay
 
 
 }

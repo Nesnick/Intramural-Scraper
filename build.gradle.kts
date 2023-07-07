@@ -12,7 +12,9 @@ repositories {
 
 dependencies {
     implementation("com.github.kittinunf.fuel:fuel:2.3.1")
-    implementation("com.github.kittinunf.result:result-jvm:5.4.0") //for JVM support
+    implementation("com.github.kittinunf.result:result:3.1.0")
+    implementation ("com.github.kittinunf.fuel:fuel-gson:2.3.1")
+    implementation("com.google.code.gson:gson:2.8.9")
 }
 
 tasks.test {
