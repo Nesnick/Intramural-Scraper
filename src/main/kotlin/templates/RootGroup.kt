@@ -2,7 +2,7 @@ package templates
 
 import com.google.gson.annotations.SerializedName
 
-data class Root(
+data class RootGroup(
     @SerializedName("list")
 
     var list : ArrayList<ReplayGroup> = arrayListOf()
